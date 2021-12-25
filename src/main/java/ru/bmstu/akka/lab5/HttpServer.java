@@ -33,6 +33,7 @@ public class HttpServer {
     private static final int PARALLEL_FUTURES = 5;
     private static final int ASK_TIMEOUT_MS = 5000;
     private static final String FAIL_MSG = "Failed test with url %s and count %d";
+    private static final String SUCCESS_MSG = "Succeed test with url %s and count %d, res %";
 
     private final ActorRef cacheActor;
     private final ActorMaterializer materializer;
@@ -114,17 +115,15 @@ public class HttpServer {
 
     private HttpResponse createResponse(Object resObj) {
         TestResult res = (TestResult) resObj;
-        HttpResponse resp;
+        HttpResponse resp = HttpResponse.create();
 
         if (!res.isSuccess()) {
-            resp = HttpResponse.create();
             String data = String.format(FAIL_MSG, res.getUrl(), res.getCount());
             ResponseEntity entity = HttpEntities.create(data);
             return resp.withEntity(entity);
         }
 
-
-        
+        String data =
 
     }
 }
