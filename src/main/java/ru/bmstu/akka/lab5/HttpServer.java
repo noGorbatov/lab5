@@ -109,7 +109,7 @@ public class HttpServer {
                             mapConcat( pair -> {
                                         System.out.println("map concat");
                                         return new ArrayList<>(
-                                                Collections.nCopies(pair.second(), pair.first()))
+                                                Collections.nCopies(pair.second(), pair.first()));
                                     }
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
