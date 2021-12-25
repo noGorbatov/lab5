@@ -13,6 +13,7 @@ import akka.stream.javadsl.Flow;
 import com.sun.xml.internal.ws.util.CompletedFuture;
 import akka.japi.Pair;
 import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.Response;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,8 +86,11 @@ public class HttpServer {
                                         Collections.nCopies(pair.second(), pair.first()))
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
-                                asyncHttpClient().prepareGet(url).execute().get();
-
+                                CompletableFuture<Response> resp = asyncHttpClient().prepareGet(url).execute().toCompletableFuture();
+                                resp.thenApply(response -> {
+                                    long end = System.currentTimeMillis();
+                                    return 
+                                })
                             })
                 });
     }
