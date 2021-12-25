@@ -62,16 +62,17 @@ public class CacheActor extends AbstractActor {
 
     @Override
     public Receive createReceive() {
-        receiveBuilder().
+        return receiveBuilder().
                 match(GetMsg.class, msg -> {
                     double average = cache.getOrDefault(
                             new Pair<>(msg.getUrl(), msg.getCount()), -1.);
                     getSender().tell(new ResMsg(average >= 0, average),
                                         ActorRef.noSender());
                 }).
-                match(StoreMsg.class, msg -> {
-                    cache.put(new Pair<>(msg.getUrl(), msg.getCount()), msg.getAverage());
-                })
+                match(StoreMsg.class,
+                        msg -> cache.put(new Pair<>(msg.getUrl(),
+                                                    msg.getCount()),
+                                                    msg.getAverage()))
                 .build();
     }
 }
