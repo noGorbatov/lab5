@@ -12,7 +12,7 @@ import java.util.concurrent.CompletionStage;
 public class HttpServer {
     private static final String TEST_URL_PARAM = "testUrl";
     private static final String COUNT_PARAM = "count";
-    private static final int PARALLEL_FUTURES = 5;
+    private static final int PARALLEL_FUTURES = 1;
 
     public Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
         return Flow.of(HttpRequest.class).
