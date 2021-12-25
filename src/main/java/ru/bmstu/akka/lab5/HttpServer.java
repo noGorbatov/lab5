@@ -14,7 +14,8 @@ public class HttpServer {
 
     public Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
         return Flow.of(HttpRequest.class).
-                map( req -> )
+                map(this::parseHttp).
+                map()
     }
 
     private ParseResult parseHttp(HttpRequest req) {
@@ -26,6 +27,14 @@ public class HttpServer {
         }
 
         String url = urlOptional.get();
+        int count;
 
+        try {
+            count = Integer.parseInt(countOptional.get());
+        } catch (NumberFormatException e) {
+            return new ParseResult(false, 0, "");
+        }
+
+        return new ParseResult(true, count, url);
     }
 }
