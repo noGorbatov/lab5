@@ -11,11 +11,11 @@ import java.util.Optional;
 public class HttpServer {
     private static final String TEST_URL_PARAM = "testUrl";
     private static final String COUNT_PARAM = "count";
-
+    private static final int PARALLEL
     public Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
         return Flow.of(HttpRequest.class).
                 map(this::parseHttp).
-                map()
+                mapAsync()
     }
 
     private ParseResult parseHttp(HttpRequest req) {
