@@ -97,6 +97,7 @@ public class HttpServer {
                     System.out.println("received actor response");
                     CacheActor.ResMsg res = (CacheActor.ResMsg) resObj;
                     if (res.hasResult()) {
+                        System.out.println("has result");
                         return CompletableFuture.completedFuture(
                                 new TestResult(true,
                                         parsedRequest.getTestUrl(),
