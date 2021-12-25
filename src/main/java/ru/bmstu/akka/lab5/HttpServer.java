@@ -130,7 +130,7 @@ public class HttpServer {
                                         testResult.getCount(),
                                         testResult.getAverageTime()), ActorRef.noSender());
                                 return testResult;
-                            }) Keep.right()).
+                            }).toMat(Sink.head(), Keep.right()).
                             run(materializer);
                 });
     }
