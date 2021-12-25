@@ -1,6 +1,8 @@
 package ru.bmstu.akka.lab5;
 
 import akka.NotUsed;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
@@ -14,6 +16,11 @@ public class HttpServer {
     private static final String TEST_URL_PARAM = "testUrl";
     private static final String COUNT_PARAM = "count";
     private static final int PARALLEL_FUTURES = 5;
+
+    private ActorRef cacheActor
+    public HttpServer(ActorSystem system) {
+
+    }
 
     public Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
         return Flow.of(HttpRequest.class).
@@ -42,6 +49,6 @@ public class HttpServer {
     }
 
     private CompletionStage<CacheActor.ResMsg> makeRequest(ParseResult parsedRequest) {
-        return Patterns.ask()
+        return Patterns.ask(new CacheActor(.))
     }
 }
