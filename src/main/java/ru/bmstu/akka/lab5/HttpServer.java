@@ -124,7 +124,8 @@ public class HttpServer {
                     return Source.single(new Pair<>(parsedRequest.getTestUrl(),
                                                 parsedRequest.getCount())).
                             via(flow).
-                            toMat(Sink.fold((long)0, TestResult::add), Keep.right()).
+                            fold(new TestResult(true, parsedRequest.getTestUrl(), 0., parsedRequest.getCount(), ""),
+                                    TestResult::add), Keep.right()).
                             run(materializer);
                 });
     }
