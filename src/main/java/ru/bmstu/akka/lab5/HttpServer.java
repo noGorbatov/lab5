@@ -60,6 +60,8 @@ public class HttpServer {
         Query query = req.getUri().query();
         Optional<String> urlOptional = query.get(TEST_URL_PARAM);
         Optional<String> countOptional = query.get(COUNT_PARAM);
+        system.log().debug(urlOptional + " " + countOptional);
+        
         if (!urlOptional.isPresent()) {
             return new ParseResult(false, 0, "", "url is absent");
         }
@@ -67,8 +69,6 @@ public class HttpServer {
         if (!countOptional.isPresent()) {
             return new ParseResult(false, 0, "", "count is absent");
         }
-
-        system.log().debug(urlOptional + " " + countOptional);
 
         String url = urlOptional.get();
         int count;
