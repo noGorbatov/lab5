@@ -1,5 +1,5 @@
-/mnt/e/lab5/src/main/java/ru/bmstu/akka/lab5/TestResult.java
-/mnt/e/lab5/src/main/java/ru/bmstu/akka/lab5/LoadTestApp.java
-/mnt/e/lab5/src/main/java/ru/bmstu/akka/lab5/CacheActor.java
-/mnt/e/lab5/src/main/java/ru/bmstu/akka/lab5/ParseResult.java
-/mnt/e/lab5/src/main/java/ru/bmstu/akka/lab5/HttpServer.java
+/mnt/data/Distr/lab5/src/main/java/ru/bmstu/akka/lab5/HttpServer.java
+/mnt/data/Distr/lab5/src/main/java/ru/bmstu/akka/lab5/LoadTestApp.java
+/mnt/data/Distr/lab5/src/main/java/ru/bmstu/akka/lab5/TestResult.java
+/mnt/data/Distr/lab5/src/main/java/ru/bmstu/akka/lab5/CacheActor.java
+/mnt/data/Distr/lab5/src/main/java/ru/bmstu/akka/lab5/ParseResult.java
