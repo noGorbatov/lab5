@@ -64,7 +64,13 @@ public class HttpServer {
                 new CacheActor.GetMsg(parsedRequest.getTestUrl(),
                                         parsedRequest.getCount()), ASK_TIMEOUT_MS).
                 thenCompose( resObj -> {
-                    
+                    CacheActor.ResMsg res = (CacheActor.ResMsg) resObj;
+                    if (res.hasResult()) {
+                        return CompletableFuture.completedFuture(
+                                new TestResult(true,
+                                        parsedRequest.getTestUrl(),
+                                        res.getAverageTime()));
+                    }
                 });
     }
 }
