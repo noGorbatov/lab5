@@ -8,7 +8,9 @@ import akka.stream.javadsl.Flow;
 import javafx.util.Pair;
 
 public class HttpServer {
-    private static final String  
+    private static final String TEST_URL_PARAM = "testUrl";
+    private static final String TEST_URL_PARAM = "testUrl";
+
     public Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
         return Flow.of(HttpRequest.class).
                 map( req -> )
