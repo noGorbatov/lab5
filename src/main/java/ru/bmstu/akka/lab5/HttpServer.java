@@ -13,6 +13,9 @@ import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
 import akka.japi.Pair;
 import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.Dsl;
+import org.asynchttpclient.Request;
+import org.asynchttpclient.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Future;
 
 import static org.asynchttpclient.Dsl.asyncHttpClient;
 
@@ -96,12 +100,13 @@ public class HttpServer {
                     System.out.println("received actor response");
                     CacheActor.ResMsg res = (CacheActor.ResMsg) resObj;
                     if (res.hasResult()) {
-                        System.out.println("has result");
+                        System.out.println("has result " + res.getAverageTime());
                         return CompletableFuture.completedFuture(
                                 new TestResult(true,
                                         parsedRequest.getTestUrl(),
                                         res.getAverageTime(),
-                                        parsedRequest.getCount(), "has result"));
+                                        parsedRequest.getCount(),
+                                        "has result"));
                     }
 
                     Flow<Pair<String, Integer>, Long, NotUsed> flow = Flow.<Pair<String, Integer>>create().
@@ -112,7 +117,13 @@ public class HttpServer {
                                     }
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
-                                System.out.println("sending response from http client");
+                                /*System.out.println("sending response from http client");
+                                AsyncHttpClient client2 = Dsl.asyncHttpClient();
+                                Request req = Dsl.get(url).build();
+                                System.out.println(client2.executeRequest(req).toCompletableFuture().get().toString());
+                                Future<Response> whenResponse = asyncHttpClient().prepareGet(url).execute();
+                                Response resp = whenResponse.get();
+                                System.out.println(resp.toString());*/
                                 return client.prepareGet(url).execute().toCompletableFuture().
                                         thenCompose(response -> {
                                             long end = System.currentTimeMillis();
@@ -126,8 +137,8 @@ public class HttpServer {
                             fold(new TestResult(true, parsedRequest.getTestUrl(), 0., parsedRequest.getCount(), ""),
                                     TestResult::add).map( testResult -> {
                                 cacheActor.tell(new CacheActor.StoreMsg(testResult.getUrl(),
-                                        testResult.getCount(),
-                                        testResult.getAverageTime()), ActorRef.noSender());
+                                                                        testResult.getCount(),
+                                                testResult.getAverageTime()), ActorRef.noSender());
                                 return (Object) testResult;
                             }).toMat(Sink.head(), Keep.right()).
                             run(materializer);
@@ -146,6 +157,7 @@ public class HttpServer {
             return resp.withEntity(entity);
         }
 
+        System.out.println(res.getAverageTime());
         String data = String.format(SUCCESS_MSG, res.getUrl(), res.getCount(), res.getAverageTime());
         ResponseEntity entity = HttpEntities.create(data);
         return resp.withEntity(entity);
