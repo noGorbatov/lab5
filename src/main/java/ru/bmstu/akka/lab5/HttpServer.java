@@ -125,7 +125,12 @@ public class HttpServer {
                                                 parsedRequest.getCount())).
                             via(flow).
                             fold(new TestResult(true, parsedRequest.getTestUrl(), 0., parsedRequest.getCount(), ""),
-                                    TestResult::add), Keep.right()).
+                                    TestResult::add).map( testResult -> {
+                                cacheActor.tell(new CacheActor.StoreMsg(testResult.getUrl(),
+                                        testResult.getCount(),
+                                        testResult.getAverageTime()), ActorRef.noSender());
+                                return testResult;
+                            }) Keep.right()).
                             run(materializer);
                 });
     }

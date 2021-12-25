@@ -25,7 +25,7 @@ public class TestResult {
     }
 
     public double getAverageTime() {
-        return averageTime;
+        return (double)sum / count;
     }
 
     public boolean isSuccess() {
