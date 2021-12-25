@@ -1,2 +1,4 @@
-package ru.bmstu.akka.lab5;public class LoadTestApp {
+package ru.bmstu.akka.lab5;
+
+public class LoadTestApp {
 }
