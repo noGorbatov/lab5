@@ -8,7 +8,7 @@ import akka.stream.javadsl.Flow;
 import javafx.util.Pair;
 
 public class HttpServer {
-
+    private static final String  
     public Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
         return Flow.of(HttpRequest.class).
                 map( req -> )
@@ -16,6 +16,6 @@ public class HttpServer {
 
     private Flow<HttpRequest, Pair<String, Integer>> parseHttp(HttpRequest req) {
         Query query = req.getUri().query();
-        String 
+        String
     }
 }
