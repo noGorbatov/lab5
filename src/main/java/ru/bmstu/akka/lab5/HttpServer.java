@@ -114,7 +114,7 @@ public class HttpServer {
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
                                 System.out.println("sending response from http client");
-                                return asyncHttpClient().prepareGet(url).execute().toCompletableFuture().
+                                return client.prepareGet(url).execute().toCompletableFuture().
                                         thenCompose(response -> {
                                             long end = System.currentTimeMillis();
                                             System.out.println("received response from http client");
@@ -125,11 +125,7 @@ public class HttpServer {
                                                 parsedRequest.getCount())).
                             via(flow).
                             toMat(Sink.fold((long)0, Long::sum), Keep.right()).
-                            run(materializer).
-                            thenApply( sum -> new TestResult(true,
-                                    parsedRequest.getTestUrl(),
-                                    (double) sum / parsedRequest.getCount(),
-                                    parsedRequest.getCount(), "calculated"));
+                            run(materializer);
                 });
     }
 
