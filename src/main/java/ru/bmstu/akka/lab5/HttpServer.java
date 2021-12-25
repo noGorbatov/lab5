@@ -78,7 +78,7 @@ public class HttpServer {
         if (!parsedRequest.isSuccess()) {
             return CompletableFuture.completedFuture(
                     new TestResult(false, parsedRequest.getTestUrl(),
-                            -1, parsedRequest.getCount()));
+                            -1, parsedRequest.getCount(), "fail parse"));
         }
 
         return PatternsCS.ask(cacheActor,
@@ -91,7 +91,7 @@ public class HttpServer {
                                 new TestResult(true,
                                         parsedRequest.getTestUrl(),
                                         res.getAverageTime(),
-                                        parsedRequest.getCount()));
+                                        parsedRequest.getCount(), "has result"));
                     }
 
                     Flow<Pair<String, Integer>, Long, NotUsed> flow = Flow.<Pair<String, Integer>>create().
@@ -114,7 +114,7 @@ public class HttpServer {
                             thenApply( sum -> new TestResult(true,
                                     parsedRequest.getTestUrl(),
                                     (double) sum / parsedRequest.getCount(),
-                                    parsedRequest.getCount()));
+                                    parsedRequest.getCount(), "calculated"));
                 });
     }
 
