@@ -111,7 +111,7 @@ public class HttpServer {
                                         return new ArrayList<>(
                                                 Collections.nCopies(pair.second(), pair.first()));
                                     }
-                            ).mapAsync(5, url -> {
+                            ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
                                 System.out.println("sending response from http client");
                                 return asyncHttpClient().prepareGet(url).execute().toCompletableFuture().
