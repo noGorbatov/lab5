@@ -87,11 +87,11 @@ public class HttpServer {
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
                                 CompletableFuture<Response> resp = asyncHttpClient().prepareGet(url).execute().toCompletableFuture();
-                                resp.thenApply(response -> {
+                                return resp.thenApply(response -> {
                                     long end = System.currentTimeMillis();
-                                    return 
-                                })
-                            })
+                                    return end - start;
+                                });
+                            }).map
                 });
     }
 }
