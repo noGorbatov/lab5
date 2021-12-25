@@ -71,6 +71,8 @@ public class HttpServer {
                                         parsedRequest.getTestUrl(),
                                         res.getAverageTime()));
                     }
+
+                    
                 });
     }
 }
