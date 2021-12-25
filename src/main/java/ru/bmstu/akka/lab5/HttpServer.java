@@ -94,7 +94,7 @@ public class HttpServer {
                 new CacheActor.GetMsg(parsedRequest.getTestUrl(),
                                         parsedRequest.getCount()), ASK_TIMEOUT_MS).
                 thenCompose( resObj -> {
-
+                    System.out.println("received actor response");
                     CacheActor.ResMsg res = (CacheActor.ResMsg) resObj;
                     if (res.hasResult()) {
                         return CompletableFuture.completedFuture(
