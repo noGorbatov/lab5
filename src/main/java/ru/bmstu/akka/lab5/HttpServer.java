@@ -62,6 +62,8 @@ public class HttpServer {
             return new ParseResult(false, 0, "");
         }
 
+        System.out.println(urlOptional + " " + countOptional);
+
         String url = urlOptional.get();
         int count;
 
