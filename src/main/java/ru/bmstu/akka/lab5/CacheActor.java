@@ -68,6 +68,10 @@ public class CacheActor extends AbstractActor {
                             new Pair<>(msg.getUrl(), msg.getCount()), -1.);
                     getSender().tell(new ResMsg(average >= 0, average),
                                         ActorRef.noSender());
-                }).build();
+                }).
+                match(StoreMsg.class, msg -> {
+                    cache.put(new Pair<>(msg.getUrl(), msg.getCount()), msg.getAverage());
+                })
+                .build();
     }
 }
