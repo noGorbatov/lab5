@@ -94,6 +94,7 @@ public class HttpServer {
                 new CacheActor.GetMsg(parsedRequest.getTestUrl(),
                                         parsedRequest.getCount()), ASK_TIMEOUT_MS).
                 thenCompose( resObj -> {
+                    
                     CacheActor.ResMsg res = (CacheActor.ResMsg) resObj;
                     if (res.hasResult()) {
                         return CompletableFuture.completedFuture(
@@ -128,6 +129,8 @@ public class HttpServer {
     }
 
     private HttpResponse createResponse(Object resObj) {
+        System.out.println("creating response");
+
         TestResult res = (TestResult) resObj;
         HttpResponse resp = HttpResponse.create();
 
