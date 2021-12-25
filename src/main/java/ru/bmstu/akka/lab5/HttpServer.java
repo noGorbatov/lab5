@@ -39,5 +39,5 @@ public class HttpServer {
         return new ParseResult(true, count, url);
     }
 
-    private  
+    private
 }
