@@ -12,19 +12,16 @@ import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
-import com.sun.xml.internal.ws.util.CompletedFuture;
 import akka.japi.Pair;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.Future;
 
 import static org.asynchttpclient.Dsl.asyncHttpClient;
 
