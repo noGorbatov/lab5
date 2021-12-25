@@ -11,6 +11,7 @@ import akka.pattern.Patterns;
 import akka.pattern.PatternsCS;
 import akka.stream.javadsl.Flow;
 import com.sun.xml.internal.ws.util.CompletedFuture;
+import akka.japi.Pair;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -72,7 +73,7 @@ public class HttpServer {
                                         res.getAverageTime()));
                     }
 
-                    
+                    Flow.<Pair<String, Integer>>create().
                 });
     }
 }
