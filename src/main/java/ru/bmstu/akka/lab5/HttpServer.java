@@ -129,7 +129,7 @@ public class HttpServer {
                                 cacheActor.tell(new CacheActor.StoreMsg(testResult.getUrl(),
                                         testResult.getCount(),
                                         testResult.getAverageTime()), ActorRef.noSender());
-                                return testResult;
+                                return (Object) testResult;
                             }).toMat(Sink.head(), Keep.right()).
                             run(materializer);
                 });
