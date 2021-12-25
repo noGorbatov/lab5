@@ -31,6 +31,15 @@ public class LoadTestApp {
         );
 
         System.in.read();
-
+        
+        binding.thenCompose(ServerBinding::unbind).
+                thenAccept(unbound -> {
+                    system.terminate();
+                    try {
+                        server.freeHttpClient();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 }
