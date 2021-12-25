@@ -116,6 +116,12 @@ public class HttpServer {
     }
 
     private HttpResponse createResponse(Object resObj) {
+        TestResult res = (TestResult) resObj;
+        if (!res.isSuccess()) {
+            return HttpResponse.create().
+                    withEntity(HttpEntities.create(
+                            String.format(FAIL_MSG, res.getUrl(), res.getCount())));
+        }
 
     }
 }
