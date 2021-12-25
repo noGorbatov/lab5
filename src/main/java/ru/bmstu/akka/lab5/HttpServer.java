@@ -115,11 +115,10 @@ public class HttpServer {
                                 long start = System.currentTimeMillis();
                                 System.out.println("sending response from http client");
                                 CompletableFuture<Response> resp = client.prepareGet(url).execute().toCompletableFuture();
-                                return resp.
-                                        thenCompose(response -> {
+                                return resp.thenCompose(response -> {
                                     long end = System.currentTimeMillis();
                                     System.out.println("received response from http client");
-                                    return end - start;
+                                    return CompletableFuture.completedFuture(end - start);
                                 });
                             });
                     return Source.single(new Pair<>(parsedRequest.getTestUrl(),
