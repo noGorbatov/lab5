@@ -3,9 +3,10 @@ package ru.bmstu.akka.lab5;
 import akka.actor.AbstractActor;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class CacheActor extends AbstractActor {
-    private final HashMap<String, Double> cache = new HashMap<>();
+    private final Map<String, Double> cache = new HashMap<>();
 
     public static class GetMsg {
         private final String url;
@@ -41,6 +42,7 @@ public class CacheActor extends AbstractActor {
     public Receive createReceive() {
         receiveBuilder().
                 match(GetMsg.class, msg -> {
+                    double average = cache.getOrDefault(msg.getUrl())
                     getSender().tell(new ResMsg());
                 })
     }
