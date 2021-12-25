@@ -14,8 +14,8 @@ public class LoadTestApp {
         final Http http = Http.get(system);
         final ActorMaterializer materializer =
                 ActorMaterializer.create(system);
-        HttpServer server 
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow =
-
+        HttpServer server = new HttpServer(system, materializer);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = server.createFlow();
+        final Completion
     }
 }
