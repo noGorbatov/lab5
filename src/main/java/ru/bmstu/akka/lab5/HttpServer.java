@@ -61,6 +61,7 @@ public class HttpServer {
         Optional<String> countOptional = query.get(COUNT_PARAM);
         system.log().debug(urlOptional + " " + countOptional);
         System.out.println(urlOptional + " " + countOptional);
+        System.out.println(req.getUri().toString());
 
         if (!urlOptional.isPresent()) {
             return new ParseResult(false, 0, "", "url is absent");
