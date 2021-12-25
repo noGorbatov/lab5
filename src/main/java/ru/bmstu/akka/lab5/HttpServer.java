@@ -36,11 +36,13 @@ public class HttpServer {
     private final ActorRef cacheActor;
     private final ActorMaterializer materializer;
     private final AsyncHttpClient client;
+    private final ActorSystem system;
 
     public HttpServer(ActorSystem system, ActorMaterializer materializer) {
         cacheActor = system.actorOf(Props.create(CacheActor.class));
         this.materializer = materializer;
         client = asyncHttpClient();
+        this.system = system;
     }
 
     public void freeHttpClient() throws IOException {
@@ -66,7 +68,7 @@ public class HttpServer {
             return new ParseResult(false, 0, "", "count is absent");
         }
 
-        System.out.println(urlOptional + " " + countOptional);
+        system.log().debug(urlOptional + " " + countOptional);
 
         String url = urlOptional.get();
         int count;
