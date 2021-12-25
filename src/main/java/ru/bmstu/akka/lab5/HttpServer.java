@@ -91,7 +91,7 @@ public class HttpServer {
                                     long end = System.currentTimeMillis();
                                     return end - start;
                                 });
-                            }).map
+                            }).
                 });
     }
 }
