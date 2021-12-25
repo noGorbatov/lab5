@@ -114,7 +114,7 @@ public class HttpServer {
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
                                 System.out.println("sending response from http client");
-                                return client.prepareGet(url).execute().toCompletableFuture().
+                                return AsyncHttpClient().prepareGet(url).execute().toCompletableFuture().
                                         thenCompose(response -> {
                                             long end = System.currentTimeMillis();
                                             System.out.println("received response from http client");
