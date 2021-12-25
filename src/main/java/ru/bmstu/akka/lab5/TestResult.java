@@ -36,7 +36,8 @@ public class TestResult {
         return count;
     }
 
-    static public TestResult add(TestResult agg, TestResult test) {
-        agg.sum += test.
+    static public TestResult add(TestResult agg, Long time) {
+        agg.sum += time;
+        return agg;
     }
 }

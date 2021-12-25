@@ -124,10 +124,7 @@ public class HttpServer {
                     return Source.single(new Pair<>(parsedRequest.getTestUrl(),
                                                 parsedRequest.getCount())).
                             via(flow).
-                            toMat(Sink.fold((long)0, Long::sum), Keep.right()).
-                            mapMaterializedValue( sum -> new TestResult(true,
-                                                                                parsedRequest.getTestUrl(), sum / parsedRequest.getCount(),
-                                    ))
+                            toMat(Sink.fold((long)0, TestResult::add), Keep.right()).
                             run(materializer);
                 });
     }
