@@ -21,7 +21,17 @@ public class CacheActor extends AbstractActor {
 
     public static class ResMsg {
         private final boolean hasResult;
-        private final 
+        private final double averageTime;
+        public ResMsg(boolean has, double average) {
+            this.hasResult = has;
+            this.averageTime = average;
+        }
+        public double getAverageTime() {
+            return averageTime;
+        }
+        public boolean hasResult() {
+            return hasResult;
+        }
     }
 
     @Override
