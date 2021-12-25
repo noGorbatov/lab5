@@ -17,6 +17,7 @@ import akka.japi.Pair;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,13 +34,20 @@ public class HttpServer {
     private static final int PARALLEL_FUTURES = 5;
     private static final int ASK_TIMEOUT_MS = 5000;
     private static final String FAIL_MSG = "Failed test with url %s and count %d";
-    private static final String SUCCESS_MSG = "Succeed test with url %s and count %d, res %";
+    private static final String SUCCESS_MSG = "Succeed test with url %s and count %d, res %f";
 
     private final ActorRef cacheActor;
     private final ActorMaterializer materializer;
+    private final AsyncHttpClient client;
+
     public HttpServer(ActorSystem system, ActorMaterializer materializer) {
         cacheActor = system.actorOf(Props.create(CacheActor.class));
         this.materializer = materializer;
+        client = asyncHttpClient();
+    }
+
+    public void freeHttpClient() throws IOException {
+        client.close();
     }
 
     public Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
@@ -95,7 +103,7 @@ public class HttpServer {
                                         Collections.nCopies(pair.second(), pair.first()))
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
-                                CompletableFuture<Response> resp = asyncHttpClient().prepareGet(url).execute().toCompletableFuture();
+                                CompletableFuture<Response> resp = client.prepareGet(url).execute().toCompletableFuture();
                                 return resp.thenApply(response -> {
                                     long end = System.currentTimeMillis();
                                     return end - start;
@@ -123,7 +131,8 @@ public class HttpServer {
             return resp.withEntity(entity);
         }
 
-        String data =
-
+        String data = String.format(SUCCESS_MSG, res.getUrl(), res.getCount(), res.getAverageTime());
+        ResponseEntity entity = HttpEntities.create(data);
+        return resp.withEntity(entity);
     }
 }
