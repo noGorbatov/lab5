@@ -77,10 +77,12 @@ public class HttpServer {
                     }
 
                     Flow.<Pair<String, Integer>>create().
-                            mapConcat( pair -> {
-                                new ArrayList<String>(
-                                        Collections.nCopies(pair.second(), pair.first()));
-                            }).mapAsync()
+                            mapConcat( pair ->
+                                new ArrayList<>(
+                                        Collections.nCopies(pair.second(), pair.first()))
+                            ).mapAsync(parsedRequest.getCount(), url -> {
+                                
+                            })
                 });
     }
 }
