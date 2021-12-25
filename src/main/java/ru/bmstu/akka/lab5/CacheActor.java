@@ -10,6 +10,11 @@ import java.util.Map;
 public class CacheActor extends AbstractActor {
     private final Map<Pair<String, Integer>, Double> cache = new HashMap<>();
 
+    public static class StoreMsg {
+        private final String url;
+        private final int count;
+    }
+
     public static class GetMsg {
         private final String url;
         private final int count;
