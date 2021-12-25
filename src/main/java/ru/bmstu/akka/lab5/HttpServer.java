@@ -113,8 +113,8 @@ public class HttpServer {
                                     }
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
-                                CompletableFuture<Response> resp = client.prepareGet(url).execute().toCompletableFuture();
                                 System.out.println("sending response from http client");
+                                CompletableFuture<Response> resp = client.prepareGet(url).execute().toCompletableFuture();
                                 return resp.thenApply(response -> {
                                     long end = System.currentTimeMillis();
                                     System.out.println("received response from http client");
