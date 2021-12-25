@@ -4,10 +4,7 @@ import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
-import akka.http.javadsl.model.HttpEntities;
-import akka.http.javadsl.model.HttpRequest;
-import akka.http.javadsl.model.HttpResponse;
-import akka.http.javadsl.model.Query;
+import akka.http.javadsl.model.*;
 import akka.pattern.Patterns;
 import akka.pattern.PatternsCS;
 import akka.stream.ActorMaterializer;
@@ -117,11 +114,17 @@ public class HttpServer {
 
     private HttpResponse createResponse(Object resObj) {
         TestResult res = (TestResult) resObj;
+        HttpResponse resp;
+
         if (!res.isSuccess()) {
-            return HttpResponse.create().
-                    withEntity(HttpEntities.create(
-                            String.format(FAIL_MSG, res.getUrl(), res.getCount())));
+            resp = HttpResponse.create();
+            String data = String.format(FAIL_MSG, res.getUrl(), res.getCount());
+            ResponseEntity entity = HttpEntities.create(data);
+            return resp.withEntity(entity);
         }
+
+
+        
 
     }
 }
