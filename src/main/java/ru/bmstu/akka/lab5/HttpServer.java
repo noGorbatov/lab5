@@ -51,7 +51,7 @@ public class HttpServer {
 
     private CompletionStage<Object> makeRequest(ParseResult parsedRequest) {
         if (!parsedRequest.isSuccess()) {
-            return 
+            return CompletionStage<Pair<String, >>
         }
 
         Patterns.ask(cacheActor,
