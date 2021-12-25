@@ -7,6 +7,7 @@ public class TestResult {
     private final double averageTime;
     private final String msg;
     private long sum;
+    private boolean added = false;
 
     public TestResult(boolean success, String url, double averageTime, int count, String msg) {
         this.success = success;
@@ -25,7 +26,11 @@ public class TestResult {
     }
 
     public double getAverageTime() {
-        return (double)sum / count;
+        if (added) {
+            return (double) sum / count;
+        } else {
+            return averageTime;
+        }
     }
 
     public boolean isSuccess() {
@@ -36,8 +41,13 @@ public class TestResult {
         return count;
     }
 
+    public double getResult() {
+        return averageTime;
+    }
+
     static public TestResult add(TestResult agg, Long time) {
         agg.sum += time;
+        agg.added = true;
         return agg;
     }
 }
