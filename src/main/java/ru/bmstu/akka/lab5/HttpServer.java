@@ -13,7 +13,9 @@ import akka.stream.javadsl.Flow;
 import com.sun.xml.internal.ws.util.CompletedFuture;
 import akka.japi.Pair;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -76,10 +78,9 @@ public class HttpServer {
 
                     Flow.<Pair<String, Integer>>create().
                             mapConcat( pair -> {
-                                String requests[] = new String[pair.second()];
-                                Arrays.fill(requests, pair.first());
-                                return requests;
-                            })
+                                new ArrayList<String>(
+                                        Collections.nCopies(pair.second(), pair.first()));
+                            }).mapAsync()
                 });
     }
 }
