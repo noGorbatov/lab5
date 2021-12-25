@@ -40,5 +40,5 @@ public class HttpServer {
         return new ParseResult(true, count, url);
     }
 
-    private CompletionStage<>
+    private CompletionStage<CacheActor.ResMsg> makeRequest(ParseResult )
 }
