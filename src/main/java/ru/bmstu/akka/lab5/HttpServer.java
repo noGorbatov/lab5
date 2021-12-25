@@ -12,6 +12,7 @@ import akka.pattern.PatternsCS;
 import akka.stream.javadsl.Flow;
 import com.sun.xml.internal.ws.util.CompletedFuture;
 import akka.japi.Pair;
+import org.asynchttpclient.AsyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Future;
+
+import static org.asynchttpclient.Dsl.asyncHttpClient;
 
 public class HttpServer {
     private static final String TEST_URL_PARAM = "testUrl";
@@ -81,7 +84,9 @@ public class HttpServer {
                                 new ArrayList<>(
                                         Collections.nCopies(pair.second(), pair.first()))
                             ).mapAsync(parsedRequest.getCount(), url -> {
-                                
+                                long start = System.currentTimeMillis();
+                                asyncHttpClient().prepareGet(url).execute().get();
+
                             })
                 });
     }
