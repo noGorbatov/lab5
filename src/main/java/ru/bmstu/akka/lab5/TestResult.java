@@ -5,12 +5,18 @@ public class TestResult {
     private final String url;
     private final int count;
     private final double averageTime;
+    private final String msg;
 
-    public TestResult(boolean success, String url, double averageTime, int count) {
+    public TestResult(boolean success, String url, double averageTime, int count, String msg) {
         this.success = success;
         this.url = url;
         this.averageTime = averageTime;
         this.count = count;
+        this.msg = msg;
+    }
+
+    public String getMsg() {
+        return msg;
     }
 
     public String getUrl() {
