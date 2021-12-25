@@ -106,9 +106,11 @@ public class HttpServer {
                     }
 
                     Flow<Pair<String, Integer>, Long, NotUsed> flow = Flow.<Pair<String, Integer>>create().
-                            mapConcat( pair ->
-                                new ArrayList<>(
-                                        Collections.nCopies(pair.second(), pair.first()))
+                            mapConcat( pair -> {
+                                        System.out.println("map concat");
+                                        return new ArrayList<>(
+                                                Collections.nCopies(pair.second(), pair.first()))
+                                    }
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
                                 CompletableFuture<Response> resp = client.prepareGet(url).execute().toCompletableFuture();
