@@ -58,8 +58,12 @@ public class HttpServer {
         Query query = req.getUri().query();
         Optional<String> urlOptional = query.get(TEST_URL_PARAM);
         Optional<String> countOptional = query.get(COUNT_PARAM);
-        if (!urlOptional.isPresent() || !countOptional.isPresent()) {
-            return new ParseResult(false, 0, "");
+        if (!urlOptional.isPresent()) {
+            return new ParseResult(false, 0, "", "url is absent");
+        }
+
+        if (!countOptional.isPresent()) {
+            return new ParseResult(false, 0, "", "count is absent");
         }
 
         System.out.println(urlOptional + " " + countOptional);
@@ -70,17 +74,17 @@ public class HttpServer {
         try {
             count = Integer.parseInt(countOptional.get());
         } catch (NumberFormatException e) {
-            return new ParseResult(false, 0, "");
+            return new ParseResult(false, 0, "", "number format exception");
         }
 
-        return new ParseResult(true, count, url);
+        return new ParseResult(true, count, url, "");
     }
 
     private CompletionStage<Object> makeRequest(ParseResult parsedRequest) {
         if (!parsedRequest.isSuccess()) {
             return CompletableFuture.completedFuture(
                     new TestResult(false, parsedRequest.getTestUrl(),
-                            -1, parsedRequest.getCount(), "fail parse"));
+                            -1, parsedRequest.getCount(), parsedRequest.getMsg()));
         }
 
         return PatternsCS.ask(cacheActor,
