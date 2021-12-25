@@ -11,11 +11,12 @@ import java.util.Optional;
 public class HttpServer {
     private static final String TEST_URL_PARAM = "testUrl";
     private static final String COUNT_PARAM = "count";
-    private static final int PARALLEL
+    private static final int PARALLEL_FUTURES = 5;
+
     public Flow<HttpRequest, HttpResponse, NotUsed> createFlow() {
         return Flow.of(HttpRequest.class).
                 map(this::parseHttp).
-                mapAsync()
+                mapAsync(PARALLEL_FUTURES, )
     }
 
     private ParseResult parseHttp(HttpRequest req) {
@@ -37,4 +38,6 @@ public class HttpServer {
 
         return new ParseResult(true, count, url);
     }
+
+    private  
 }
