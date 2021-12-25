@@ -136,9 +136,11 @@ public class HttpServer {
                             via(flow).
                             fold(new TestResult(true, parsedRequest.getTestUrl(), 0., parsedRequest.getCount(), ""),
                                     TestResult::add).map( testResult -> {
+                                        System.out.println("cache tell " + testResult.getAverageTime());
                                 cacheActor.tell(new CacheActor.StoreMsg(testResult.getUrl(),
                                                                         testResult.getCount(),
-                                                testResult.getAverageTime()), ActorRef.noSender());
+                                                                        testResult.getAverageTime()),
+                                                ActorRef.noSender());
                                 return (Object) testResult;
                             }).toMat(Sink.head(), Keep.right()).
                             run(materializer);
