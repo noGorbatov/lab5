@@ -7,6 +7,7 @@ import akka.http.javadsl.model.Query;
 import akka.stream.javadsl.Flow;
 
 import java.util.Optional;
+import java.util.concurrent.CompletionStage;
 
 public class HttpServer {
     private static final String TEST_URL_PARAM = "testUrl";
@@ -39,5 +40,5 @@ public class HttpServer {
         return new ParseResult(true, count, url);
     }
 
-    private
+    private CompletionStage<>
 }
