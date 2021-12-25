@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Future;
 
 import static org.asynchttpclient.Dsl.asyncHttpClient;
 
@@ -114,7 +115,7 @@ public class HttpServer {
                             ).mapAsync(parsedRequest.getCount(), url -> {
                                 long start = System.currentTimeMillis();
                                 System.out.println("sending response from http client");
-                                CompletableFuture<Response> resp = client.prepareGet(url).execute();
+                                Future<Response> resp = client.prepareGet(url).execute();
                                 return resp.thenApply(response -> {
                                     long end = System.currentTimeMillis();
                                     System.out.println("received response from http client");
