@@ -6,6 +6,7 @@ public class TestResult {
     private final int count;
     private final double averageTime;
     private final String msg;
+    private long sum;
 
     public TestResult(boolean success, String url, double averageTime, int count, String msg) {
         this.success = success;
@@ -35,5 +36,7 @@ public class TestResult {
         return count;
     }
 
-    
+    static public TestResult add(TestResult agg, TestResult test) {
+        agg.sum += test.
+    }
 }
