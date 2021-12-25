@@ -30,7 +30,7 @@ public class HttpServer {
     private static final String COUNT_PARAM = "count";
     private static final int PARALLEL_FUTURES = 5;
     private static final int ASK_TIMEOUT_MS = 5000;
-    private static final String FAIL_MSG = "Failed test with url %s and count %d";
+    private static final String FAIL_MSG = "Failed test with url %s and count %d: %s";
     private static final String SUCCESS_MSG = "Succeed test with url %s and count %d, res %f";
 
     private final ActorRef cacheActor;
@@ -123,7 +123,7 @@ public class HttpServer {
         HttpResponse resp = HttpResponse.create();
 
         if (!res.isSuccess()) {
-            String data = String.format(FAIL_MSG, res.getUrl(), res.getCount());
+            String data = String.format(FAIL_MSG, res.getUrl(), res.getCount(), res.getMsg());
             ResponseEntity entity = HttpEntities.create(data);
             return resp.withEntity(entity);
         }
