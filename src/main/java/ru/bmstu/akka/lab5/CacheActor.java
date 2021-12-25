@@ -70,9 +70,12 @@ public class CacheActor extends AbstractActor {
                                         ActorRef.noSender());
                 }).
                 match(StoreMsg.class,
-                        msg -> cache.put(new Pair<>(msg.getUrl(),
-                                                    msg.getCount()),
-                                                    msg.getAverage()))
+                        msg -> {
+                    cache.put(new Pair<>(msg.getUrl(),
+                                            msg.getCount()),
+                                    msg.getAverage());
+                    System.out.println("storing" + msg.getAverage());
+                        })
                 .build();
     }
 }
