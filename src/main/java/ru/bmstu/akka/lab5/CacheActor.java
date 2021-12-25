@@ -13,6 +13,21 @@ public class CacheActor extends AbstractActor {
     public static class StoreMsg {
         private final String url;
         private final int count;
+        private final double average;
+        public StoreMsg(String url, int count, double average) {
+            this.url = url;
+            this.count = count;
+            this.average = average;
+        }
+        public String getUrl() {
+            return url;
+        }
+        public int getCount() {
+            return count;
+        }
+        public double getAverage() {
+            return average;
+        }
     }
 
     public static class GetMsg {
