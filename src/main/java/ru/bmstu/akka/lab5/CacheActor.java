@@ -2,7 +2,10 @@ package ru.bmstu.akka.lab5;
 
 import akka.actor.AbstractActor;
 
+import java.util.HashMap;
+
 public class CacheActor extends AbstractActor {
+    private final HashMap<String, Double> cache = new HashMap<>();
 
     public static class GetMsg {
         private final String url;
@@ -38,7 +41,7 @@ public class CacheActor extends AbstractActor {
     public Receive createReceive() {
         receiveBuilder().
                 match(GetMsg.class, msg -> {
-                    getSender().tell();
+                    getSender().tell(new ResMsg());
                 })
     }
 }
