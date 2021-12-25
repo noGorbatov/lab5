@@ -63,6 +63,8 @@ public class HttpServer {
         return PatternsCS.ask(cacheActor,
                 new CacheActor.GetMsg(parsedRequest.getTestUrl(),
                                         parsedRequest.getCount()), ASK_TIMEOUT_MS).
-                thenCompose( res -> {});
+                thenCompose( resObj -> {
+                    
+                });
     }
 }
