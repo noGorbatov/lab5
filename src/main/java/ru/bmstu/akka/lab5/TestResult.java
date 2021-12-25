@@ -18,4 +18,8 @@ public class TestResult {
     public double getAverageTime() {
         return averageTime;
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
 }
