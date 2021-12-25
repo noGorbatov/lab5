@@ -107,7 +107,7 @@ public class HttpServer {
 
                     Flow<Pair<String, Integer>, Long, NotUsed> flow = Flow.<Pair<String, Integer>>create().
                             mapConcat( pair -> {
-                                        System.out.println("map concat");
+                                        System.out.println("map concat, count " + parsedRequest.getCount());
                                         return new ArrayList<>(
                                                 Collections.nCopies(pair.second(), pair.first()));
                                     }
