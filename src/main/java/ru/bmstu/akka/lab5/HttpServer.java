@@ -4,6 +4,7 @@ import akka.NotUsed;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
+import akka.pattern.Patterns;
 import akka.stream.javadsl.Flow;
 
 import java.util.Optional;
@@ -40,5 +41,7 @@ public class HttpServer {
         return new ParseResult(true, count, url);
     }
 
-    private CompletionStage<CacheActor.ResMsg> makeRequest(ParseResult )
+    private CompletionStage<CacheActor.ResMsg> makeRequest(ParseResult parsedRequest) {
+        return Patterns.ask()
+    }
 }
